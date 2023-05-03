@@ -19,4 +19,16 @@ describe("AppController (e2e)", () => {
   it("/ (GET)", () => {
     return request(app.getHttpServer()).get("/").expect(403);
   });
+
+  it("/shipments (GET)", () => {
+    return request(app.getHttpServer()).get("/shipments").expect(404);
+  });
+
+  it("/articles (GET)", () => {
+    return request(app.getHttpServer()).get("/articles").expect(404);
+  });
+
+  it("/carriers (GET)", () => {
+    return request(app.getHttpServer()).get("/carriers").expect(200);
+  });
 });
