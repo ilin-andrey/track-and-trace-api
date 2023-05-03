@@ -2,10 +2,16 @@ import { Injectable } from "@nestjs/common";
 import { Prisma, Shipment } from "@prisma/client";
 
 import { PrismaService } from "~/prisma.service";
+import { WeatherService } from "~/resources/weather/weather.service";
+
+import { ShipmentWithWeather } from "./interfaces/shipment.interface";
 
 @Injectable()
 export class ShipmentsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly weatherService: WeatherService,
+  ) {}
 
   async create(data: Prisma.ShipmentCreateInput): Promise<Shipment> {
     return this.prisma.shipment.create({
@@ -13,8 +19,8 @@ export class ShipmentsService {
     });
   }
 
-  async findOne(trackingNumber: string): Promise<Shipment | null> {
-    return this.prisma.shipment.findFirst({
+  async findOne(trackingNumber: string): Promise<ShipmentWithWeather | null> {
+    const data = await this.prisma.shipment.findFirst({
       where: { trackingNumber },
       include: {
         carrier: {
@@ -39,5 +45,15 @@ export class ShipmentsService {
         },
       },
     });
+
+    if (data) {
+      const weather = await this.weatherService.findOne(data.receiverCity);
+
+      if (weather) {
+        return { ...data, weather };
+      }
+    }
+
+    return data;
   }
 }
