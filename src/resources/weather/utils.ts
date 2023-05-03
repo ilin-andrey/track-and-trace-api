@@ -9,13 +9,22 @@ export function getCurrentWeatherQueryURL(
 export async function getCurrentWeather(
   url: string,
 ): Promise<Record<string, unknown> | null> {
-  const response = await fetch(url);
+  let response: Response;
 
-  if (!response.ok) {
+  try {
+    response = await fetch(url);
+
+    if (!response.ok) {
+      console.error("Fetch failed with status:", response.status);
+      return null;
+    }
+  } catch (e) {
+    console.error(e);
     return null;
   }
 
   const data: Record<string, unknown> = await response.json();
+  if (data) return data;
 
-  return data;
+  return null;
 }
