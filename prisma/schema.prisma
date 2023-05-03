@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Carrier {
+  id        Int        @id @default(autoincrement())
+  name      String
+  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime?  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  shipments Shipment[]
+
+  @@map("carriers")
+}
+
+model Article {
+  id                 Int                  @id @default(autoincrement())
+  sku                String               @unique
+  name               String
+  price              Float                @default(0)
+  createdAt          DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime?            @updatedAt @map("updated_at") @db.Timestamptz(6)
+  articlesOnShipment ArticlesOnShipment[]
+
+  @@map("articles")
+}
+
+model Shipment {
+  id                 Int                  @id @default(autoincrement())
+  trackingNumber     String               @unique @map("tracking_number")
+  senderZip          String               @map("sender_zip")
+  senderCountry      String               @map("sender_country")
+  senderCity         String               @map("sender_city")
+  senderAddress      String               @map("sender_address")
+  receiverZip        String               @map("receiver_zip")
+  receiverCountry    String               @map("receiver_country")
+  receiverCity       String               @map("receiver_city")
+  receiverAddress    String               @map("receiver_address")
+  createdAt          DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime?            @updatedAt @map("updated_at") @db.Timestamptz(6)
+  carrier            Carrier              @relation(fields: [carrierId], references: [id])
+  carrierId          Int                  @map("carrier_id")
+  articlesOnShipment ArticlesOnShipment[]
+
+  @@map("shipments")
+}
+
+model ArticlesOnShipment {
+  shipmentId Int      @map("shipment_id")
+  shipment   Shipment @relation(fields: [shipmentId], references: [id])
+  articleId  Int      @map("article_id")
+  article    Article  @relation(fields: [articleId], references: [id])
+  quantity   Int      @default(1)
+
+  @@id([articleId, shipmentId])
+  @@map("m2m_articles_on_shipment")
+}
