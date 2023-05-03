@@ -1,5 +1,5 @@
 export interface IWeather {
-  city: string;
+  zipCode: string;
   lastUpdatedAt: Date;
   values: Record<string, unknown>;
 }

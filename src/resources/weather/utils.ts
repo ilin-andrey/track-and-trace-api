@@ -1,9 +1,9 @@
 export function getCurrentWeatherQueryURL(
   url: string,
-  city: string,
+  zipCode: string,
   apiKey: string,
 ) {
-  return `${url}?q=${city}&appid=${apiKey}`;
+  return `${url}?q=${zipCode}&appid=${apiKey}`;
 }
 
 export async function getCurrentWeather(

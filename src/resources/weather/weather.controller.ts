@@ -6,9 +6,9 @@ import { WeatherService } from "./weather.service";
 export class WeatherController {
   constructor(private svc: WeatherService) {}
 
-  @Get(":city")
-  async findOne(@Param("city") city: string) {
-    const data = await this.svc.findOne(city);
+  @Get(":zipCode")
+  async findOne(@Param("zipCode") zipCode: string) {
+    const data = await this.svc.findOne(zipCode);
     return {
       success: true,
       data,

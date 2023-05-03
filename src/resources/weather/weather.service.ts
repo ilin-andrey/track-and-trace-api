@@ -13,7 +13,7 @@ export class WeatherService {
     private configService: ConfigService,
   ) {}
 
-  async findOne(city: string): Promise<IWeather | null> {
+  async findOne(zipCode: string): Promise<IWeather | null> {
     const weatherApiURL = this.configService.get<string>("WEATHER_API_URL");
     const weatherApiKey = this.configService.get<string>("WEATHER_API_KEY");
 
@@ -21,21 +21,25 @@ export class WeatherService {
       return null;
     }
 
-    const value: IWeather | undefined = await this.cacheManager.get(city);
+    const value: IWeather | undefined = await this.cacheManager.get(zipCode);
 
     if (value) return value;
 
-    const url = getCurrentWeatherQueryURL(weatherApiURL, city, weatherApiKey);
+    const url = getCurrentWeatherQueryURL(
+      weatherApiURL,
+      zipCode,
+      weatherApiKey,
+    );
     const data = await getCurrentWeather(url);
 
     if (!data) return null;
 
     const ret = {
-      city,
+      zipCode,
       lastUpdatedAt: new Date(),
       values: { ...data },
     };
-    await this.cacheManager.set(city, ret);
+    await this.cacheManager.set(zipCode, ret);
 
     return ret;
   }
