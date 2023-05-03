@@ -8,7 +8,8 @@ export class WeatherController {
 
   @Get(":zipCode")
   async findOne(@Param("zipCode") zipCode: string) {
-    const data = await this.svc.findOne(zipCode);
+    const data = await this.svc.getWeather(zipCode);
+
     return {
       success: true,
       data,

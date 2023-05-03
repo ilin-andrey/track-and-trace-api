@@ -13,7 +13,7 @@ export class WeatherService {
     private configService: ConfigService,
   ) {}
 
-  async findOne(zipCode: string): Promise<IWeather | null> {
+  async getWeather(zipCode: string): Promise<IWeather | null> {
     const weatherApiURL = this.configService.get<string>("WEATHER_API_URL");
     const weatherApiKey = this.configService.get<string>("WEATHER_API_KEY");
 

@@ -47,7 +47,7 @@ export class ShipmentsService {
     });
 
     if (data) {
-      const weather = await this.weatherService.findOne(data.receiverZip);
+      const weather = await this.weatherService.getWeather(data.receiverZip);
 
       if (weather) {
         return { ...data, weather };
