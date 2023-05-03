@@ -49,6 +49,7 @@ For `status` of the shipment we can add additional field to our `shipment` entit
 `GET /weather/{ZIP}` - weather details for the given location as is from external service, `ZIP` is the zip code of location
 
 `GET /shipments/{TRACKING_NUMBER}` - all shipment details with (if available) the current weather information about destination location, `TRACKING_NUMBER` is a tracking number
+`POST /shipments` - create a new shipment
 
 ## Installation
 
