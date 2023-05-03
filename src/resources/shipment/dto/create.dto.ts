@@ -20,7 +20,7 @@ export class CreateDto {
 }
 
 export const CreateSchema = Joi.object({
-  trackingNumber: Joi.string().required(),
+  trackingNumber: Joi.string().required().uppercase(),
   senderZip: Joi.string().required(),
   senderCountry: Joi.string().required(),
   senderCity: Joi.string().required(),

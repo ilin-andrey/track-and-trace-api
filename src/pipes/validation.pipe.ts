@@ -5,8 +5,8 @@ import { ObjectSchema } from "joi";
 export class JoiValidationPipe implements PipeTransform {
   constructor(private schema: ObjectSchema) {}
 
-  transform(value: any) {
-    const { error } = this.schema.validate(value);
+  transform(input: any) {
+    const { value, error } = this.schema.validate(input);
 
     if (error) {
       const errorMessages = error.details.map((d) => d.message).join();

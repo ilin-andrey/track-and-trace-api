@@ -7,7 +7,7 @@ export class CreateDto {
 }
 
 export const CreateSchema = Joi.object({
-  sku: Joi.string().required(),
-  name: Joi.string().required(),
+  sku: Joi.string().required().uppercase(),
+  name: Joi.string().required().lowercase(),
   price: Joi.number(),
 });
