@@ -9,7 +9,7 @@ import { WeatherService } from "./weather.service";
   imports: [
     CacheModule.register({
       ttl: CACHE_TTL, // seconds
-      max: 100, // maximum number of items in cache
+      max: 10, // maximum number of items in cache
     }),
   ],
   controllers: [WeatherController],

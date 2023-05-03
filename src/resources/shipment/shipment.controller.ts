@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, UsePipes } from "@nestjs/common";
+import { CacheInterceptor } from "@nestjs/cache-manager";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseInterceptors,
+  UsePipes,
+} from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 
 import { JoiValidationPipe } from "~/pipes/validation.pipe";
@@ -7,6 +16,7 @@ import { CreateDto, CreateSchema } from "./dto/create.dto";
 import { ShipmentsService } from "./shipment.service";
 
 @Controller("shipments")
+@UseInterceptors(CacheInterceptor)
 export class ShipmentsController {
   constructor(private svc: ShipmentsService) {}
 
