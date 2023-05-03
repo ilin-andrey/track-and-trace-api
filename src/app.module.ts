@@ -5,6 +5,7 @@ import { logger } from "~/middleware/logger.middleware";
 import { ArticlesModule } from "~/resources/article/article.module";
 import { CarriersModule } from "~/resources/carrier/carrier.module";
 import { ShipmentsModule } from "~/resources/shipment/shipment.module";
+import { WeatherModule } from "~/resources/weather/weather.module";
 
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -20,6 +21,7 @@ import { AppService } from "./app.service";
     ShipmentsModule,
     ArticlesModule,
     CarriersModule,
+    WeatherModule,
   ],
   controllers: [AppController],
   providers: [AppService],
