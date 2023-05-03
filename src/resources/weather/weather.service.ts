@@ -32,6 +32,7 @@ export class WeatherService {
 
     const ret = {
       city,
+      lastUpdatedAt: new Date(),
       values: { ...data },
     };
     await this.cacheManager.set(city, ret);
